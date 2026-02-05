@@ -4,6 +4,7 @@ import { connectDB } from './config/db.js';
 import User from './models/user.model.js';
 import bcrypt from "bcrypt";
 import authRoutes from "./routes/auth.route.js"
+import userRoutes from "./routes/user.route.js"
 
 const app = express();
 
@@ -21,7 +22,6 @@ const admin = await User.findOne({ userId : "admin" });
     if(!admin){
         const admin = await User.create({
             name : "Aatif",
-            userId : "admin",
             password: await bcrypt.hash("123", 10),
             email: "atif@gmail.com",
             userType: "ADMIN",
@@ -36,7 +36,7 @@ const admin = await User.findOne({ userId : "admin" });
 
 
     app.use("/crm/api/v1", authRoutes);
-
+    app.use("/crm/api/v1", userRoutes);
 
 
 

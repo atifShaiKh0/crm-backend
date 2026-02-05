@@ -10,16 +10,11 @@ export const validateUser = async (req, res, next) => {
     });
   }
 
-  if (!req.body.userId) {
-    return res.status(400).send({
-      message: "UserId is Required",
-    });
-  }
 
   const user = await User.findOne({ email: req.body.email });
   if (user) {
     return res.status(400).json({
-      message: "User Already Exists",
+      message: "User with this email already exists.",
     });
   }
 
@@ -36,7 +31,7 @@ export const validateUser = async (req, res, next) => {
     constants.userType.engineer,
   ];
 
-  if (req.body.userType && !req.body.userType.includes(usersTypes)) {
+  if (req.body.userType && !usersTypes.includes(req.body.userType)) {
     return res.status(400).json({
       message: "User type is invalid",
     });

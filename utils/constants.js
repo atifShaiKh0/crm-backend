@@ -12,7 +12,6 @@ export const constants = {
     },
 
     userStatus: {
-
         pending: "PENDING",
         approved: "APPROVED",
         blocked: "BLOCKED"

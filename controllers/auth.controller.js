@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import User from "../models/user.model.js";
 import { constants } from "../utils/constants.js";
+import jwt from "jsonwebtoken"
 
 
 export const signup = async (req, res) => {
@@ -17,7 +18,6 @@ export const signup = async (req, res) => {
         const userObj = {
             name: req.body.name,
             password: await bcrypt.hash(req.body.password, 10),
-            userId: req.body.userId,
             email: req.body.email,
             userType: req.body.userType,
             userStatus: userStatus,
@@ -34,5 +34,22 @@ export const signup = async (req, res) => {
 }
 
 export const login = async (req, res) => {
-    return res.json({ success: "true" });
+    const user = await User.findOne({ email: req.body.email });
+    if(!user) return res.status(404).send({ message: "No account is associated with this userID" });
+
+
+    if(user.userStatus != constants.userStatus.approved) return res.status(400).send({ message: "Status is not approved" });
+    
+    const password = bcrypt.compareSync(req.body.password, user.password);
+
+    if(!password) return res.status(401).send({ message: "Invalid Password" });
+
+    const token = jwt.sign({ id: user._id }, process.env.SECRET, { expiresIn: "2h" });
+
+
+    return res.status(200)
+            .send({
+                user: user.email,
+                token : token
+            })
 }
