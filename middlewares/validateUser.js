@@ -39,3 +39,36 @@ export const validateUser = async (req, res, next) => {
 
   next();
 };
+
+
+export const validateStatusAndType = async (req, res, next) => {
+
+  const { status, type } = req.query;
+
+  const allowedStatus = [
+    constants.userStatus.approved,
+    constants.userStatus.pending,
+    constants.userStatus.blocked,
+  ];
+
+  if(status && !allowedStatus.includes(status)){
+    return res.status(400).send({
+      message: "Invalid User Status"
+    })
+  }
+
+  const allowedTypes = [
+    constants.userType.admin,
+    constants.userType.customer,
+    constants.userType.engineer,
+  ];
+
+  if(type && !allowedTypes.includes(type)){
+    return res.status(400).send({
+      message: "Invalid User Type"
+    })
+  }
+  
+  next();
+}
+

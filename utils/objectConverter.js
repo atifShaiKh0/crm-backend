@@ -1,17 +1,19 @@
 export const userResponse = (users) => {
-    let userResult = [];
+  if (!Array.isArray(users)) {
+    users = [users];
+  }
 
-    users.forEach(user => {
-        userResult.push({
-            name: user.name,
-            userId: user.userId,
-            email: user.email,
-            userType: user.userType,
-            userStatus: user.userStatus
-        })
+  let userResult = [];
 
-    })
+  users.forEach((user) => {
+    userResult.push({
+      name: user.name,
+      userId: user.userId,
+      email: user.email,
+      userType: user.userType,
+      userStatus: user.userStatus,
+    });
+  });
 
-
-    return userResult;
-}
+  return userResult;
+};
