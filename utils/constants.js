@@ -15,5 +15,11 @@ export const constants = {
         pending: "PENDING",
         approved: "APPROVED",
         blocked: "BLOCKED"
+    },
+
+    ticketStatuses: {
+        open: "OPEN",
+        closed: "CLOSED",
+        blocked: "BLOCKED"
     }
 }

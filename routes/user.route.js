@@ -6,7 +6,7 @@ import { validateStatusAndType } from "../middlewares/validateUser.js";
 const router = express.Router();
 
 router.get("/users", verifyToken, isAdmin, getUsers);
-router.get("/users/:userId", validateStatusAndType, getUser);
-router.patch("/users/:userId", verifyToken, isAdmin, validateStatusAndType, updateUser)
+router.get("/users/:id", validateStatusAndType, getUser);
+router.patch("/users/:id", verifyToken, isAdmin, validateStatusAndType, updateUser)
 
 export default router;

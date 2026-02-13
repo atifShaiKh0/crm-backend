@@ -42,7 +42,7 @@ export const getUser = async (req, res) => {
 export const updateUser = async (req, res) => {
 
   try{
-    const { userId } = req.params;
+    const { id } = req.params;
 
   const { name, userStatus, userType } = req.body;
 
@@ -61,7 +61,7 @@ export const updateUser = async (req, res) => {
 
 
   const user = await userModel.findOneAndUpdate(
-    { userId },
+    { _id : id },
     updates,
     { new : true }
   )

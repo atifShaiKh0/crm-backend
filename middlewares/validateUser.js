@@ -25,17 +25,17 @@ export const validateUser = async (req, res, next) => {
     });
   }
 
-  const usersTypes = [
-    constants.userType.customer,
+  const allowedTypes = [
     constants.userType.admin,
+    constants.userType.customer,
     constants.userType.engineer,
   ];
 
-  if (req.body.userType && !usersTypes.includes(req.body.userType)) {
+  if (req.body.userType && !allowedTypes.includes(req.body.userType)) {
     return res.status(400).json({
       message: "User type is invalid",
     });
-  }
+  } 
 
   next();
 };
